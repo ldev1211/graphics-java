@@ -14,6 +14,7 @@ public class MainForm extends JFrame{
     public MainForm(){
         setSize(WindowManager.getScreenWidth(), WindowManager.getScreenHeight());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.white);
         pS = new Coordinate(0,0);
         pE = new Coordinate(0,0);
         addMouseListener(new MouseListener() {
@@ -33,9 +34,6 @@ public class MainForm extends JFrame{
             public void mouseReleased(MouseEvent e) {
                 pE.setX(e.getX());
                 pE.setY(e.getY());
-//                Line line = new Line(MainForm.this,pS,pE);
-//                line.drawShape();
-//                WindowManager.stackShape.push(line);
             }
 
             @Override
