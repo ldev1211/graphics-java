@@ -1,7 +1,12 @@
+package model;
+
+import model.PixelPoint;
+import model.Shape;
+
 import javax.swing.*;
 import java.awt.Color;
 
-public class Line extends Shape{
+public class Line extends Shape {
     JFrame frame;
     Coordinate pointStart;
     Coordinate pointEnd;
@@ -45,7 +50,7 @@ public class Line extends Shape{
             }
             Coordinate coordinate = new Coordinate(xStart,yStart);
             PixelPoint pixelPoint = new PixelPoint(coordinate, Color.BLACK);
-            super.coordinateHashMap.put(coordinate,coordinate);
+            super.coordinateHashMap.put(coordinate.toString(),pixelPoint);
             super.putPixel(frame,pixelPoint);
         }
     }

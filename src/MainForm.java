@@ -1,27 +1,34 @@
+import config.ConstantSymmetry;
+import config.WindowManager;
+import model.Coordinate;
+import model.Line;
+import model.PixelPoint;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Color;
 import java.awt.event.*;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 
 public class MainForm extends JFrame{
     Point lastPoint;
     Coordinate pS;
     Coordinate pE;
-
+    Line prevLine;
+    boolean isDragging = false;
     public MainForm(){
         setSize(WindowManager.getScreenWidth(), WindowManager.getScreenHeight());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.white);
+        int oy = ConstantSymmetry.OY;
         pS = new Coordinate(0,0);
         pE = new Coordinate(0,0);
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                MainForm.this.getGraphics().setColor(Color.GREEN);
-                MainForm.this.getGraphics().drawLine(100,200,100,400);
+                WindowManager.mapPixel.put(new Coordinate(1,1).toString(),new Stack<>());
             }
 
             @Override
@@ -32,8 +39,13 @@ public class MainForm extends JFrame{
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                isDragging = false;
+                if(prevLine==null) return;
                 pE.setX(e.getX());
                 pE.setY(e.getY());
+                WindowManager.saveShape(prevLine);
+                Coordinate coordinate = new Coordinate(1,1);
+                WindowManager.mapPixel.put(coordinate.toString(),new Stack<>());
             }
 
             @Override
@@ -50,19 +62,27 @@ public class MainForm extends JFrame{
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
-                if(WindowManager.stackShape.size()!=0){
-                    Line prevLine = (Line) WindowManager.stackShape.peek();
-                    Set<Map.Entry<Coordinate,Coordinate>> entries = prevLine.coordinateHashMap.entrySet();
-                    for(Map.Entry<Coordinate,Coordinate> keyValue: entries){
-                        prevLine.putPixel(MainForm.this,new PixelPoint(keyValue.getValue(), Color.WHITE));
+                if(prevLine == null) prevLine = new Line(MainForm.this,pS,pE);
+                if(isDragging){
+                    Set<Map.Entry<String, PixelPoint>> entries = prevLine.coordinateHashMap.entrySet();
+                    for(Map.Entry<String,PixelPoint> keyValue: entries){
+                        Stack<PixelPoint> pixelPointStack = WindowManager.mapPixel.get(keyValue.getKey());
+                        if(pixelPointStack==null){
+                            prevLine.putPixel(MainForm.this,
+                                    new PixelPoint(
+                                            keyValue.getValue().getCoordinate(),
+                                            Color.WHITE
+                                    )
+                            );
+                        }
                     }
                 }
+                isDragging = true;
                 pE.setX(e.getX());
                 pE.setY(e.getY());
                 Line line = new Line(MainForm.this,pS,pE);
                 line.drawShape();
-                WindowManager.stackShape.push(line);
-                System.out.println(WindowManager.stackShape.size());
+                prevLine = line;
             }
 
             @Override

@@ -1,9 +1,19 @@
+package model;
+
 public class Coordinate {
     private int x;
     private int y;
 
     public int getX() {
         return x;
+    }
+
+    @Override
+    public String toString() {
+        return "Coordinate{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 
     public void setX(int x) {
