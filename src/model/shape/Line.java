@@ -1,7 +1,7 @@
-package model;
+package model.shape;
 
+import model.Coordinate;
 import model.PixelPoint;
-import model.Shape;
 
 import javax.swing.*;
 import java.awt.Color;

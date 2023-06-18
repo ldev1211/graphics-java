@@ -1,8 +1,7 @@
-import config.ConstantSymmetry;
 import config.WindowManager;
-import model.Coordinate;
-import model.Line;
-import model.PixelPoint;
+import model.*;
+import model.shape.Circle;
+import model.shape.Shape;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,13 +15,12 @@ public class MainForm extends JFrame{
     Point lastPoint;
     Coordinate pS;
     Coordinate pE;
-    Line prevLine;
+    Shape prevShape;
     boolean isDragging = false;
     public MainForm(){
         setSize(WindowManager.getScreenWidth(), WindowManager.getScreenHeight());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.white);
-        int oy = ConstantSymmetry.OY;
         pS = new Coordinate(0,0);
         pE = new Coordinate(0,0);
         addMouseListener(new MouseListener() {
@@ -40,10 +38,10 @@ public class MainForm extends JFrame{
             @Override
             public void mouseReleased(MouseEvent e) {
                 isDragging = false;
-                if(prevLine==null) return;
+                if(prevShape==null) return;
                 pE.setX(e.getX());
                 pE.setY(e.getY());
-                WindowManager.saveShape(prevLine);
+                WindowManager.saveShape(prevShape);
                 Coordinate coordinate = new Coordinate(1,1);
                 WindowManager.mapPixel.put(coordinate.toString(),new Stack<>());
             }
@@ -62,13 +60,13 @@ public class MainForm extends JFrame{
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
-                if(prevLine == null) prevLine = new Line(MainForm.this,pS,pE);
+                if(prevShape == null) prevShape = new Circle(MainForm.this,pS, (int) Math.sqrt(Math.pow(pS.getX()-e.getX(),2)+Math.pow(pS.getY()-e.getY(),2)));
                 if(isDragging){
-                    Set<Map.Entry<String, PixelPoint>> entries = prevLine.coordinateHashMap.entrySet();
+                    Set<Map.Entry<String, PixelPoint>> entries = prevShape.coordinateHashMap.entrySet();
                     for(Map.Entry<String,PixelPoint> keyValue: entries){
                         Stack<PixelPoint> pixelPointStack = WindowManager.mapPixel.get(keyValue.getKey());
                         if(pixelPointStack==null){
-                            prevLine.putPixel(MainForm.this,
+                            prevShape.putPixel(MainForm.this,
                                     new PixelPoint(
                                             keyValue.getValue().getCoordinate(),
                                             Color.WHITE
@@ -78,11 +76,9 @@ public class MainForm extends JFrame{
                     }
                 }
                 isDragging = true;
-                pE.setX(e.getX());
-                pE.setY(e.getY());
-                Line line = new Line(MainForm.this,pS,pE);
-                line.drawShape();
-                prevLine = line;
+                Circle circle = new Circle(MainForm.this,pS,(int) Math.sqrt(Math.pow(pS.getX()-e.getX(),2)+Math.pow(pS.getY()-e.getY(),2)));
+                circle.drawShape();
+                prevShape = circle;
             }
 
             @Override

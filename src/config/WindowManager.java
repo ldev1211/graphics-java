@@ -1,7 +1,7 @@
 package config;
 
 import model.PixelPoint;
-import model.Shape;
+import model.shape.Shape;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;

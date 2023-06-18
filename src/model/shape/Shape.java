@@ -1,6 +1,8 @@
-package model;
+package model.shape;
 
 import config.ConstantSymmetry;
+import model.Coordinate;
+import model.PixelPoint;
 
 import javax.swing.*;
 import java.awt.*;
