@@ -1,6 +1,8 @@
 import config.WindowManager;
 import model.*;
 import model.shape.Circle;
+import model.shape.Elisp;
+import model.shape.Rectangle;
 import model.shape.Shape;
 
 import javax.swing.*;
@@ -60,7 +62,7 @@ public class MainForm extends JFrame{
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
-                if(prevShape == null) prevShape = new Circle(MainForm.this,pS, (int) Math.sqrt(Math.pow(pS.getX()-e.getX(),2)+Math.pow(pS.getY()-e.getY(),2)));
+                if(prevShape == null) prevShape = new Elisp(MainForm.this,pS,(e.getX()-pS.getX()),(e.getY()-pS.getY()));
                 if(isDragging){
                     Set<Map.Entry<String, PixelPoint>> entries = prevShape.coordinateHashMap.entrySet();
                     for(Map.Entry<String,PixelPoint> keyValue: entries){
@@ -76,9 +78,9 @@ public class MainForm extends JFrame{
                     }
                 }
                 isDragging = true;
-                Circle circle = new Circle(MainForm.this,pS,(int) Math.sqrt(Math.pow(pS.getX()-e.getX(),2)+Math.pow(pS.getY()-e.getY(),2)));
-                circle.drawShape();
-                prevShape = circle;
+                Elisp elisp = new Elisp(MainForm.this,pS,(e.getX()-pS.getX()),(e.getY()-pS.getY()));
+                elisp.drawShape();
+                prevShape = elisp;
             }
 
             @Override
