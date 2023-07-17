@@ -1,5 +1,6 @@
 package model.shape;
 
+import config.Constants;
 import model.Coordinate;
 import model.PixelPoint;
 
@@ -21,6 +22,9 @@ public class Elisp extends Shape{
     }
 
     public void drawShape() {
+
+        System.out.println("a: "+ majorAxis);
+        System.out.println("b: "+minorAxis);
         int a = majorAxis;
         int b = minorAxis;
 
@@ -67,16 +71,16 @@ public class Elisp extends Shape{
     }
 
     private void drawPoints(int x, int y) {
-        PixelPoint p1 = new PixelPoint(new Coordinate(central.getX()+x, central.getY()+y), Color.BLACK);
+        PixelPoint p1 = new PixelPoint(new Coordinate(central.getX()+x, central.getY()+y).cvtUserCoorToMachineCoor(Constants.ORIGIN_X, Constants.ORIGIN_Y), Color.BLACK);
         super.putPixel(frame,p1);
         super.coordinateHashMap.put(p1.getCoordinate().toString(),p1);
-        PixelPoint p2 = new PixelPoint(new Coordinate(central.getX()-x, central.getY()+y),Color.BLACK);
+        PixelPoint p2 = new PixelPoint(new Coordinate(central.getX()-x, central.getY()+y).cvtUserCoorToMachineCoor(Constants.ORIGIN_X, Constants.ORIGIN_Y),Color.BLACK);
         super.putPixel(frame,p2);
         super.coordinateHashMap.put(p2.getCoordinate().toString(),p2);
-        PixelPoint p3 = new PixelPoint(new Coordinate(central.getX()+x, central.getY()-y),Color.BLACK);
+        PixelPoint p3 = new PixelPoint(new Coordinate(central.getX()+x, central.getY()-y).cvtUserCoorToMachineCoor(Constants.ORIGIN_X, Constants.ORIGIN_Y),Color.BLACK);
         super.putPixel(frame,p3);
         super.coordinateHashMap.put(p3.getCoordinate().toString(),p3);
-        PixelPoint p4 = new PixelPoint(new Coordinate(central.getX()-x, central.getY()-y),Color.BLACK);
+        PixelPoint p4 = new PixelPoint(new Coordinate(central.getX()-x, central.getY()-y).cvtUserCoorToMachineCoor(Constants.ORIGIN_X, Constants.ORIGIN_Y),Color.BLACK);
         super.putPixel(frame,p4);
         super.coordinateHashMap.put(p4.getCoordinate().toString(),p4);
     }

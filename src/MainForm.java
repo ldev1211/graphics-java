@@ -1,7 +1,7 @@
+import config.Constants;
 import config.WindowManager;
 import model.*;
-import model.shape.Circle;
-import model.shape.Elisp;
+import model.shape.*;
 import model.shape.Rectangle;
 import model.shape.Shape;
 
@@ -78,9 +78,35 @@ public class MainForm extends JFrame{
                     }
                 }
                 isDragging = true;
-                Elisp elisp = new Elisp(MainForm.this,pS,(e.getX()-pS.getX()),(e.getY()-pS.getY()));
-                elisp.drawShape();
-                prevShape = elisp;
+
+//                Elisp elisp = new Elisp(MainForm.this,pS,(e.getX()-pS.getX()),(e.getY()-pS.getY()));
+//                elisp.drawShape();
+//                prevShape = elisp;
+//
+                Coordinate pStart = pS.cvtMachineCoorToUserCoor(Constants.ORIGIN_X, Constants.ORIGIN_Y);
+                Coordinate pEnd = new Coordinate(e.getX(), e.getY()).cvtMachineCoorToUserCoor(Constants.ORIGIN_X, Constants.ORIGIN_Y);
+                System.out.println(pStart.toString());
+                System.out.println(pEnd.toString());
+
+//                Elisp elisp = new Elisp(MainForm.this,pStart,(pEnd.getX()-pStart.getX()),(pStart.getY()-pEnd.getY()));
+//                elisp.drawShape();
+//                prevShape = elisp;
+
+//               // LINE
+                Line line = new Line(MainForm.this, pStart, pEnd);
+                line.drawShape();
+                prevShape = line;
+
+                // CIRCLE
+//                Circle circle = new Circle(MainForm.this, pStart, (pEnd.getX()-pStart.getX()));
+//                circle.drawShape();
+//                prevShape = circle;
+
+                // RECTANGLE
+//                Rectangle rect = new Rectangle(MainForm.this, pStart, (pEnd.getX()-pStart.getX()),(pEnd.getY()-pStart.getY()));
+//                rect.drawShape();
+//                prevShape = rect;
+
             }
 
             @Override

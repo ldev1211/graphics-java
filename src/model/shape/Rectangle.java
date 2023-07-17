@@ -1,5 +1,6 @@
 package model.shape;
 
+import config.Constants;
 import model.Coordinate;
 import model.PixelPoint;
 
@@ -51,9 +52,11 @@ public class Rectangle extends Shape{
                 yStart += sy;
             }
             Coordinate coordinate = new Coordinate(xStart,yStart);
-            PixelPoint pixelPoint = new PixelPoint(coordinate, Color.BLACK);
+//            PixelPoint pixelPoint = new PixelPoint(coordinate, Color.BLACK);
+            PixelPoint pixelPoint = new PixelPoint(coordinate.cvtUserCoorToMachineCoor(Constants.ORIGIN_X, Constants.ORIGIN_Y), Color.BLACK);
             super.coordinateHashMap.put(coordinate.toString(),pixelPoint);
             super.putPixel(frame,pixelPoint);
+
         }
     }
 }
