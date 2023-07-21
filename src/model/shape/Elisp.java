@@ -7,14 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Elisp extends Shape{
-
-    private JFrame frame;
     private Coordinate central;
     private int majorAxis;
     private int minorAxis;
 
-    public Elisp(JFrame frame, Coordinate central, int majorAxis, int minorAxis) {
-        this.frame = frame;
+    public Elisp(Graphics graphics, Coordinate central, int majorAxis, int minorAxis) {
+        super.g = graphics;
         this.central = central;
         this.majorAxis = majorAxis;
         this.minorAxis = minorAxis;
@@ -67,17 +65,17 @@ public class Elisp extends Shape{
     }
 
     private void drawPoints(int x, int y) {
-        PixelPoint p1 = new PixelPoint(new Coordinate(central.getX()+x, central.getY()+y), Color.BLACK);
-        super.putPixel(frame,p1);
+        PixelPoint p1 = new PixelPoint(new Coordinate(central.getX()+x, central.getY()+y), Color.WHITE);
+        super.putPixel(p1);
         super.coordinateHashMap.put(p1.getCoordinate().toString(),p1);
-        PixelPoint p2 = new PixelPoint(new Coordinate(central.getX()-x, central.getY()+y),Color.BLACK);
-        super.putPixel(frame,p2);
+        PixelPoint p2 = new PixelPoint(new Coordinate(central.getX()-x, central.getY()+y),Color.WHITE);
+        super.putPixel(p2);
         super.coordinateHashMap.put(p2.getCoordinate().toString(),p2);
-        PixelPoint p3 = new PixelPoint(new Coordinate(central.getX()+x, central.getY()-y),Color.BLACK);
-        super.putPixel(frame,p3);
+        PixelPoint p3 = new PixelPoint(new Coordinate(central.getX()+x, central.getY()-y),Color.WHITE);
+        super.putPixel(p3);
         super.coordinateHashMap.put(p3.getCoordinate().toString(),p3);
-        PixelPoint p4 = new PixelPoint(new Coordinate(central.getX()-x, central.getY()-y),Color.BLACK);
-        super.putPixel(frame,p4);
+        PixelPoint p4 = new PixelPoint(new Coordinate(central.getX()-x, central.getY()-y),Color.WHITE);
+        super.putPixel(p4);
         super.coordinateHashMap.put(p4.getCoordinate().toString(),p4);
     }
 }

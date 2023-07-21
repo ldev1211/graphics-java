@@ -1,18 +1,19 @@
 package model.shape;
 
-import config.ConstantSymmetry;
+import config.MatrixCalculate;
 import model.Coordinate;
 import model.PixelPoint;
-
-import javax.swing.*;
+import model.transform.Transform;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Shape {
+    public Graphics g;
     public Map<String, PixelPoint> coordinateHashMap = new HashMap<>();
-    public void putPixel(JFrame frame,PixelPoint pixelPoint){
-        Graphics g = frame.getGraphics();
+    public void putPixel(PixelPoint pixelPoint){
         g.setColor(pixelPoint.getColor());
         g.drawLine(
                 pixelPoint.getCoordinate().getX(),
@@ -21,17 +22,20 @@ public class Shape {
                 pixelPoint.getCoordinate().getY()
         );
     }
-    public void getSymmetry(int TYPE){
-        switch (TYPE) {
-            case ConstantSymmetry.O:
-                break;
-            case ConstantSymmetry.OX:
-                break;
-            case ConstantSymmetry.OY:
-                break;
+    public double[][] tmp = new double[][]{{1,0,0},{0,1,0},{0,0,1}};
+    public void setTransform(List<Transform> transforms){
+        for (Transform transform : transforms) {
+            tmp = MatrixCalculate.mulMatrix3x3(tmp, transform.transformMatrix);
         }
-    }
-    public void getSymmetry(Coordinate coordinate){
-
+        Map<String, PixelPoint> mapTmp = new HashMap<>(coordinateHashMap);
+        Set<Map.Entry<String, PixelPoint>> entries = mapTmp.entrySet();
+        coordinateHashMap.clear();
+        for(Map.Entry<String,PixelPoint> keyValue: entries){
+            Coordinate coordinate = keyValue.getValue().getCoordinate();
+            double[][] res = MatrixCalculate.mulMatrix1x3(new double[][]{new double[]{coordinate.getX(),coordinate.getY(),1}},tmp);
+            Coordinate newCoordinate = new Coordinate((int) Math.round(res[0][0]), (int) Math.round(res[0][1]));
+            PixelPoint newPixelPoint = new PixelPoint(newCoordinate,keyValue.getValue().getColor());
+            coordinateHashMap.put(newCoordinate.toString(),newPixelPoint);
+        }
     }
 }
