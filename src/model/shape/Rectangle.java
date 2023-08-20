@@ -95,7 +95,7 @@ public class Rectangle extends Shape{
 
     public void fillColor(Color color){
         g.setColor(color);
-        g.fillRect(vertex.getX(),vertex.getY(),width,height);
+        g.fillRect(vertex.getX()*5,vertex.getY()*5,width*5,height*5);
     }
 
     @Override

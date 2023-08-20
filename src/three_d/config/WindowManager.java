@@ -1,4 +1,4 @@
-package config;
+package three_d.config;
 
 import model.PixelPoint;
 import model.shape.Shape;
@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.Stack;
 
 public class WindowManager {
-    public static int userCoordinate = 5;
     public static Stack<Shape> stackShape = new Stack<>();
     public static Map<String, Stack<PixelPoint>> mapPixel = new HashMap<>();
     public static void saveShape(Shape shape){

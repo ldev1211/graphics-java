@@ -44,7 +44,7 @@ public class Circle extends Shape{
 
     public void fillColor(Color color){
         g.setColor(color);
-        g.fillOval(central.getX()-radius,central.getY()-radius,radius*2,radius*2);
+        g.fillOval((central.getX()-radius)*5,(central.getY()-radius)*5,(radius*2)*5,radius*2*5);
     }
 
     public Coordinate getCentral() {

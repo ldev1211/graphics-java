@@ -10,6 +10,7 @@ public class Elisp extends Shape{
     private Coordinate central;
     private int majorAxis;
     private int minorAxis;
+    private boolean canDraw;
 
     public Elisp(Graphics graphics, Coordinate central, int majorAxis, int minorAxis) {
         super.g = graphics;
@@ -17,7 +18,6 @@ public class Elisp extends Shape{
         this.majorAxis = majorAxis;
         this.minorAxis = minorAxis;
     }
-
     public void drawShape() {
         int a = majorAxis;
         int b = minorAxis;

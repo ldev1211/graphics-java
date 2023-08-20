@@ -10,17 +10,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static config.WindowManager.userCoordinate;
+
 public class Shape {
     public Graphics g;
     public Map<String, PixelPoint> coordinateHashMap = new HashMap<>();
     public void putPixel(PixelPoint pixelPoint){
         g.setColor(pixelPoint.getColor());
         g.drawLine(
-                pixelPoint.getCoordinate().getX(),
-                pixelPoint.getCoordinate().getY(),
-                pixelPoint.getCoordinate().getX(),
-                pixelPoint.getCoordinate().getY()
+                pixelPoint.getCoordinate().getX()*userCoordinate,
+                pixelPoint.getCoordinate().getY()*userCoordinate,
+                pixelPoint.getCoordinate().getX()*userCoordinate,
+                pixelPoint.getCoordinate().getY()*userCoordinate
         );
+//        g.drawLine(
+//                pixelPoint.getCoordinate().getX(),
+//                pixelPoint.getCoordinate().getY(),
+//                pixelPoint.getCoordinate().getX(),
+//                pixelPoint.getCoordinate().getY()
+//        );
     }
     public double[][] tmp = new double[][]{{1,0,0},{0,1,0},{0,0,1}};
     public void setTransform(List<Transform> transforms){

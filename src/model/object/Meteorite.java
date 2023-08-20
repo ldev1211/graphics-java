@@ -42,11 +42,15 @@ public class Meteorite extends Shape {
         super.g = g;
     }
 
+    public void transformEffectRemove(){
+        
+    }
+
     public void setTransform() {
         Translate reverseToO = new Translate(-parent.getCentral().getX(),-parent.getCentral().getY());
         Turn turn = new Turn(parent.getCentral(),5);
         Translate reverseToOld = new Translate(parent.getCentral().getX(),parent.getCentral().getY());
-        Translate translate = new Translate(-5,0);
+        Translate translate = new Translate(-3,0);
         double[][] transformMatrixChildren = MatrixCalculate.mulMatrix3x3(tmp,reverseToO.transformMatrix);
         transformMatrixChildren = MatrixCalculate.mulMatrix3x3(transformMatrixChildren, turn.transformMatrix);
         transformMatrixChildren = MatrixCalculate.mulMatrix3x3(transformMatrixChildren, reverseToOld.transformMatrix);
