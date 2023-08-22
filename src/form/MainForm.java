@@ -19,6 +19,8 @@ import java.util.Timer;
 
 public class MainForm extends JFrame{
 
+    public static boolean isSymmetric = false;
+
     static List<Meteorite> meteorites;
 
     static JList<String> planeJList;
@@ -239,23 +241,28 @@ public class MainForm extends JFrame{
             for (int i = 0; i< MainForm.bullets.size(); ++i){
                 if(MainForm.bullets.get(i)==null) continue;
                 if(MainForm.bullets.get(i).getVertex().getX()*5 >= MainForm.screenWidth){
-                    MainForm.bullets.remove(i);
-                    bulletDataList.remove(i);
+                    if(i<bullets.size()) MainForm.bullets.remove(i);
+                    if(i<bulletDataList.size()) bulletDataList.remove(i);
                     continue;
                 }
                 Rectangle rectangle = MainForm.bullets.get(i);
                 boolean isTouch = false;
                 for(int j = 0; j< MainForm.meteorites.size(); ++j){
-                    Circle circle = MainForm.meteorites.get(j).getParent();
+                    Meteorite meteorite = MainForm.meteorites.get(j);
+                    Circle circle = meteorite.getParent();
+                    if(meteorite.isBroke() && circle.getRadius()<=2 && j<meteorites.size()){
+                        meteorites.remove(j);
+                        continue;
+                    }
                     if(
                             (rectangle.getVertex().getX()+rectangle.getWidth())*5>= (circle.getCentral().getX()-circle.getRadius())*5 &&
                                     rectangle.getVertex().getY()*5 >= circle.getCentral().getY()*5 - circle.getRadius()*5 &&
                                     rectangle.getVertex().getY()*5 <= circle.getCentral().getY()*5 + circle.getRadius()*5
                     ){
-                        MainForm.meteorites.remove(j);
-                        MainForm.bullets.remove(i);
-                        meteoriteDataList.remove(j);
-                        bulletDataList.remove(i);
+                        MainForm.meteorites.get(j).setBroke(true);
+                        if(i<bullets.size()) MainForm.bullets.remove(i);
+                        if(j<meteoriteDataList.size()) meteoriteDataList.remove(j);
+                        if(i<bulletDataList.size()) bulletDataList.remove(i);
                         isTouch = true;
                         break;
                     }
@@ -264,7 +271,7 @@ public class MainForm extends JFrame{
                 MainForm.bullets.get(i).setTransform(transformsBullet);
                 MainForm.bullets.get(i).drawShape();
                 rectangle = bullets.get(i);
-                bulletDataList.setElementAt("Đạn "+(i+1)+" ("+rectangle.getVertex().getX()+","+rectangle.getVertex().getY()+")",i);
+                if(i<bulletDataList.size()) bulletDataList.setElementAt("Đạn "+(i+1)+" ("+rectangle.getVertex().getX()+","+rectangle.getVertex().getY()+")",i);
             }
         }
         private void transformLineStar() {
@@ -567,13 +574,14 @@ public class MainForm extends JFrame{
                 Meteorite meteorite = MainForm.meteorites.get(i);
                 if(meteorite == null) continue;
                 if(meteorite.getParent().getCentral().getX()+meteorite.getParent().getRadius()<=0){
-                    MainForm.meteorites.remove(i);
-                    meteoriteDataList.remove(i);
+                    if(i<meteorites.size()) MainForm.meteorites.remove(i);
+                    if(i < meteoriteDataList.size()) meteoriteDataList.remove(i);
                     continue;
                 }
                 meteorite.setTransform();
                 meteorite.drawShape();
-                meteoriteDataList.setElementAt(String.format("Đĩa bay %d (%d,%d)", i + 1, meteorite.getParent().getCentral().getX(), meteorite.getParent().getCentral().getY()),i);
+                if(i>=meteoriteDataList.size()) continue;
+                meteoriteDataList.setElementAt(String.format("Đĩa bay %d (%d,%d,%d)", i + 1, meteorite.getParent().getCentral().getX(), meteorite.getParent().getCentral().getY(),meteorite.getParent().getRadius()),i);
             }
         }
         @Override
@@ -593,8 +601,12 @@ public class MainForm extends JFrame{
                 transformsPlane.set(0,new Translate(-stepTranslate,0));
             } else if (keyCode == RIGHT) {
                 transformsPlane.set(0,new Translate(stepTranslate,0));
+            } else if(keyCode==D){
+                isSymmetric = !isSymmetric;
             }
         }
+
+        int D = 68;
 
         @Override
         public void keyReleased(KeyEvent e) {

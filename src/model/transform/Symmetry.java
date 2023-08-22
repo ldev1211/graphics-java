@@ -36,17 +36,12 @@ public class Symmetry extends Transform{
                 };
                 break;
             case O:
+            default:
                 super.transformMatrix = new double[][]{
                         new double[] {-1,0,0},
                         new double[] {0,-1,0},
                         new double[] {0,0,1}
                 };
-                break;
         }
-        super.transformMatrix = new double[][]{
-                new double[] {-1,0,0},
-                new double[] {0,-1,0},
-                new double[] {0,0,1}
-        };
     }
 }

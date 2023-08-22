@@ -1,10 +1,10 @@
 package model.transform;
 
 public class Scale extends Transform{
-    int sx;
-    int sy;
+    double sx;
+    double sy;
 
-    public Scale(int sx, int sy) {
+    public Scale(double sx, double sy) {
         this.sx = sx;
         this.sy = sy;
         super.transformMatrix = new double[][]{

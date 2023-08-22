@@ -1,8 +1,10 @@
 package model.shape;
 
 import config.MatrixCalculate;
+import form.MainForm;
 import model.Coordinate;
 import model.PixelPoint;
+import model.transform.Symmetry;
 import model.transform.Transform;
 
 import javax.swing.*;
@@ -101,6 +103,10 @@ public class Rectangle extends Shape{
     @Override
     public void setTransform(List<Transform> transforms) {
         super.setTransform(transforms);
+        if(MainForm.isSymmetric){
+            Symmetry symmetry = new Symmetry(Symmetry.OX);
+            tmp = MatrixCalculate.mulMatrix3x3(tmp, symmetry.transformMatrix);
+        }
         double[][] res = MatrixCalculate.mulMatrix1x3(new double[][]{new double[]{vertex.getX(),vertex.getY(),1}},tmp);
         setVertex(new Coordinate((int)Math.round(res[0][0]),(int) Math.round(res[0][1])));
         tmp = new double[][]{{1,0,0},{0,1,0},{0,0,1}};

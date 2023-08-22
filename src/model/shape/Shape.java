@@ -1,8 +1,10 @@
 package model.shape;
 
 import config.MatrixCalculate;
+import form.MainForm;
 import model.Coordinate;
 import model.PixelPoint;
+import model.transform.Symmetry;
 import model.transform.Transform;
 import java.awt.*;
 import java.util.HashMap;
@@ -23,12 +25,6 @@ public class Shape {
                 pixelPoint.getCoordinate().getX()*userCoordinate,
                 pixelPoint.getCoordinate().getY()*userCoordinate
         );
-//        g.drawLine(
-//                pixelPoint.getCoordinate().getX(),
-//                pixelPoint.getCoordinate().getY(),
-//                pixelPoint.getCoordinate().getX(),
-//                pixelPoint.getCoordinate().getY()
-//        );
     }
     public double[][] tmp = new double[][]{{1,0,0},{0,1,0},{0,0,1}};
     public void setTransform(List<Transform> transforms){
