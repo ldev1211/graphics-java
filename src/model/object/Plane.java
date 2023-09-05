@@ -64,13 +64,65 @@ public class Plane extends Shape {
     @Override
     public void setTransform(List<Transform> transforms) {
         super.setTransform(transforms);
-        if(MainForm.isSymmetric){
-            Symmetry symmetry = new Symmetry(Symmetry.OX);
-            tmp = MatrixCalculate.mulMatrix3x3(tmp, symmetry.transformMatrix);
-        }
         double[][] res = MatrixCalculate.mulMatrix1x3(new double[][]{new double[]{central.getX(),central.getY(),1}},tmp);
         setCentral(new Coordinate((int) Math.round(res[0][0]), (int) Math.round(res[0][1])));
         super.tmp = new double[][]{{1,0,0},{0,1,0},{0,0,1}};
+    }
+
+    public void fillColorPlane(){
+        g.setColor(Color.BLUE);
+        g.fillOval((central.getX()-(width/2)+7)*5,(central.getY()-((Elisp) shapes.get(3)).getMinorAxis()-1)*5,(((Elisp) shapes.get(3)).getMajorAxis()+1)*10,(((Elisp) shapes.get(3)).getMinorAxis()+1)*10);
+        putPixel(new PixelPoint(new Coordinate(central.getX(),central.getY()),Color.RED));
+        g.setColor(Color.WHITE);
+        g.fillRect((central.getX()-19)*5,(central.getY()-8)*5,125,80);
+        g.setColor(Color.BLUE);
+        g.fillPolygon(
+                new int[]{
+                        (central.getX()-19)*5,
+                        (central.getX()-19)*5,
+                        (central.getX()-2)*5,
+                        (central.getX()+6)*5
+                },
+                new int[]{
+                        (central.getY()-8)*5,
+                        (central.getY()-20)*5,
+                        (central.getY()-20)*5,
+                        (central.getY()-8)*5
+                },
+                4);
+        g.fillPolygon(
+                new int[]{
+                        (central.getX()-19)*5,
+                        (central.getX()-19)*5,
+                        (central.getX()-2)*5,
+                        (central.getX()+6)*5
+                },
+                new int[]{
+                        (central.getY()+8)*5,
+                        (central.getY()+21)*5,
+                        (central.getY()+21)*5,
+                        (central.getY()+8)*5
+                },
+                4);
+        g.setColor(Color.WHITE);
+        g.fillPolygon(
+                new int[]{
+                        (central.getX()+14)*5,
+                        (central.getX()+14)*5,
+                        (central.getX()+45)*5
+                },
+                new int[]{
+                        (central.getY()-8)*5,
+                        (central.getY()+8)*5,
+                        (central.getY())*5
+                },
+                3);
+        g.setColor(Color.BLUE);
+        g.fillOval(
+                (central.getX()+5)*5,
+                (central.getY()-9)*5,
+                (((Elisp) shapes.get(3)).getMajorAxis()+1)*10,(((Elisp) shapes.get(3)).getMinorAxis()+1)*10
+        );
     }
 
     public void transformEffectFire(int cutWidth){

@@ -104,7 +104,7 @@ public class Rectangle extends Shape{
     public void setTransform(List<Transform> transforms) {
         super.setTransform(transforms);
         if(MainForm.isSymmetric){
-            Symmetry symmetry = new Symmetry(Symmetry.OX);
+            Symmetry symmetry = new Symmetry(Symmetry.OY);
             tmp = MatrixCalculate.mulMatrix3x3(tmp, symmetry.transformMatrix);
         }
         double[][] res = MatrixCalculate.mulMatrix1x3(new double[][]{new double[]{vertex.getX(),vertex.getY(),1}},tmp);

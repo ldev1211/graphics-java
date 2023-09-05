@@ -106,7 +106,7 @@ public class MainForm extends JFrame{
     static List<Rectangle> bullets;
     static Image buffer;
     static Graphics bufferGraphics;
-    static int screenWidth = WindowManager.getScreenWidth();
+    public static int screenWidth = WindowManager.getScreenWidth();
     static int screenHeight = WindowManager.getScreenHeight();
     static Plane plane;
 
@@ -342,7 +342,7 @@ public class MainForm extends JFrame{
         int LEFT = 37;
         int UP = 38;
         int DOWN = 40;
-        int stepTranslate = 5;
+        int stepTranslate = 10;
         int cutWidth=0;
         boolean increase = false;
         private void transformPlane() {
@@ -359,8 +359,9 @@ public class MainForm extends JFrame{
                     cutWidth++;
                 }
             }
-            MainForm.plane.setTransform(transformsPlane);
-            MainForm.plane.drawShape();
+            plane.setTransform(transformsPlane);
+            plane.drawShape();
+            plane.fillColorPlane();
             planeDataList.setElementAt("Máy bay ("+plane.getCentral().getX()+","+plane.getCentral().getY()+")",0);
             transformsPlane.set(0,new Translate(0,0));
         }
@@ -603,8 +604,12 @@ public class MainForm extends JFrame{
                 transformsPlane.set(0,new Translate(stepTranslate,0));
             } else if(keyCode==D){
                 isSymmetric = !isSymmetric;
+            } else if(keyCode == ESCAPE){
+                MainForm.this.dispose();
             }
         }
+
+        final int ESCAPE = 27;
 
         int D = 68;
 

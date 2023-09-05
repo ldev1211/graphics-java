@@ -64,6 +64,38 @@ public class Elisp extends Shape{
         }
     }
 
+    public Coordinate getCentral() {
+        return central;
+    }
+
+    public void setCentral(Coordinate central) {
+        this.central = central;
+    }
+
+    public int getMajorAxis() {
+        return majorAxis;
+    }
+
+    public void setMajorAxis(int majorAxis) {
+        this.majorAxis = majorAxis;
+    }
+
+    public int getMinorAxis() {
+        return minorAxis;
+    }
+
+    public void setMinorAxis(int minorAxis) {
+        this.minorAxis = minorAxis;
+    }
+
+    public boolean isCanDraw() {
+        return canDraw;
+    }
+
+    public void setCanDraw(boolean canDraw) {
+        this.canDraw = canDraw;
+    }
+
     private void drawPoints(int x, int y) {
         PixelPoint p1 = new PixelPoint(new Coordinate(central.getX()+x, central.getY()+y), Color.WHITE);
         super.putPixel(p1);

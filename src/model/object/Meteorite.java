@@ -65,10 +65,6 @@ public class Meteorite extends Shape {
         transformMatrixChildren = MatrixCalculate.mulMatrix3x3(transformMatrixChildren, turn.transformMatrix);
         transformMatrixChildren = MatrixCalculate.mulMatrix3x3(transformMatrixChildren, reverseToOld.transformMatrix);
         transformMatrixChildren = MatrixCalculate.mulMatrix3x3(transformMatrixChildren, translate.transformMatrix);
-        if(MainForm.isSymmetric){
-            Symmetry symmetry = new Symmetry(Symmetry.OX);
-            transformMatrixChildren = MatrixCalculate.mulMatrix3x3(transformMatrixChildren, symmetry.transformMatrix);
-        }
         if(isBroke) {
             parent.setRadius(Math.round(parent.getRadius()*percent));
         }

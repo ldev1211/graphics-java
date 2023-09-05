@@ -1,5 +1,6 @@
 package three_d;
 
+import form.MainForm;
 import three_d.config.Constants;
 import three_d.model.Coordinate3D;
 import three_d.model.CoordinateAxis;
@@ -9,10 +10,9 @@ import three_d.model.shape.Rectangular;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
-public class Form3D extends JFrame {
+public class Form3D extends JFrame implements KeyListener {
     JButton btnDrawRectangular;
     JButton btnDrawHinhTru;
     JButton btnDrawHinhCau;
@@ -28,7 +28,7 @@ public class Form3D extends JFrame {
     JTextField tfRadius;
 
     JTextArea coordinateInfoLabel;
-
+    JButton btnEscape = new JButton("Quay lại");
 
     Rectangular rectangular;
     Globular globular;
@@ -37,6 +37,7 @@ public class Form3D extends JFrame {
     String TAG = "NONE";
 
     public Form3D() {
+        addKeyListener(this);
         initComponent();
 
         //set initial state for TAG and button
@@ -266,7 +267,8 @@ public class Form3D extends JFrame {
         btnDrawHinhTru.setBounds(Constants.RESOLUTION_WIDTH - 260, 380, 200, 30);
         btnDrawHinhCau.setBounds(Constants.RESOLUTION_WIDTH - 260, 420, 200, 30);
         btnConfirm.setBounds(Constants.RESOLUTION_WIDTH - 260, 460, 200, 30);
-
+        btnEscape.setBounds(Constants.RESOLUTION_WIDTH - 260, 500, 200, 30);
+        btnEscape.addActionListener(e -> Form3D.this.dispose());
 
         add(tfX);
         add(tfY);
@@ -275,6 +277,7 @@ public class Form3D extends JFrame {
         add(tfWidth);
         add(tfHeight);
         add(tfRadius);
+        add(btnEscape);
         add(btnDrawRectangular);
         add(btnDrawHinhTru);
         add(btnDrawHinhCau);
@@ -306,5 +309,26 @@ public class Form3D extends JFrame {
         tfHeight.setText("");
         tfRadius.setText("");
         coordinateInfoLabel.setText("");
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        System.out.println(keyCode);
+        if(keyCode == ESCAPE){
+            Form3D.this.dispose();
+        }
+    }
+
+    int ESCAPE = 27;
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

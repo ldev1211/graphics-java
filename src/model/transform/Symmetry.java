@@ -1,5 +1,6 @@
 package model.transform;
 
+import form.MainForm;
 import model.Coordinate;
 
 public class Symmetry extends Transform{
